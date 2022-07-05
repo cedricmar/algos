@@ -1,6 +1,10 @@
 package ds
 
-type Heap []int
+import (
+	"github.com/cedricmar/algos/constraints"
+)
+
+type Heap[T constraints.Ordered] []T
 
 // Arr[(i-1)/2] 	Returns the parent node
 // Arr[(2*i)+1] 	Returns the left child node
@@ -10,17 +14,18 @@ type Heap []int
 // equal to the value of its parent, with the maximum value at the root
 
 // Pop removes and returns the smallest element of the slice
-func (h *Heap) Pop() (int, bool) {
+func (h *Heap[T]) Pop() (T, bool) {
+	var e T
 	if len(*h) <= 0 {
-		return 0, false
+		return e, false
 	}
-	e := (*h)[0]
+	e = (*h)[0]
 	*h = (*h)[1:]
 	return e, true
 }
 
 // InsertMin add an element to a min heap
-func (h *Heap) InsertMin(v int) {
+func (h *Heap[T]) InsertMin(v T) {
 	*h = append(*h, v)
 	l := len(*h) - 1
 	for i := l; i > 0; i-- {
@@ -32,9 +37,10 @@ func (h *Heap) InsertMin(v int) {
 
 // Parent returns the index and value of the parent
 // Returns -1 (index) for the root element
-func (h *Heap) Parent(i int) (int, int) {
+func (h *Heap[T]) Parent(i int) (int, T) {
 	if i == 0 {
-		return -1, 0
+		var v T
+		return -1, v
 	}
 	pid := (i - 1) / 2
 	return pid, (*h)[pid]
