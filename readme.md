@@ -1,3 +1,3 @@
 # Gotools
 
-Common algorithms and data structures helper functions
+Generic algorithms and data structures helper functions
