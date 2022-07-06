@@ -1,28 +1,23 @@
 package ds
 
-type Stacker interface {
-	Push(e ...int)
-	Pop() int
-	Length() int
-}
+type Stack[T any] []T
 
-type Stack []int
-
-func (s *Stack) Push(e ...int) {
+func (s *Stack[T]) Push(e ...T) {
 	*s = append(*s, e...)
 }
 
-// Pop returns -1 if the stack is empty
-func (s *Stack) Pop() int {
+// Pop returns false if the stack is empty
+func (s *Stack[T]) Pop() (T, bool) {
 	l := s.Length() - 1
 	if l < 0 {
-		return -1
+		var v T
+		return v, false
 	}
 	v := (*s)[l]
 	*s = (*s)[:l]
-	return v
+	return v, true
 }
 
-func (s Stack) Length() int {
+func (s Stack[T]) Length() int {
 	return len(s)
 }

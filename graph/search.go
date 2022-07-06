@@ -1,11 +1,9 @@
 package graph
 
-import (
-	"github.com/cedricmar/algos/ds"
-)
+import "github.com/cedricmar/algos/ds"
 
 func Dfs(edges [][]int, root int) []int {
-	stack := ds.Stack{}
+	stack := ds.Stack[int]{}
 	visited := make(map[int]struct{})
 
 	// Push
@@ -14,7 +12,7 @@ func Dfs(edges [][]int, root int) []int {
 	res := []int{root}
 
 	for stack.Length() > 0 {
-		edge := stack.Pop()
+		edge, _ := stack.Pop()
 
 		if _, ok := visited[edge]; !ok {
 			res = append(res, edge)
@@ -37,15 +35,15 @@ func Dfs(edges [][]int, root int) []int {
 }
 
 func Bfs(edges [][]int, root int) []int {
-	queue := ds.Queue{}
+	queue := ds.Queue[int]{}
 	visited := make(map[int]struct{})
 
 	queue.Enqueue(root)
 	visited[root] = struct{}{}
 	res := []int{root}
 
-	for len(queue) > 0 {
-		v := queue.Dequeue()
+	for queue.Length() > 0 {
+		v, _ := queue.Dequeue()
 		prox := edges[v]
 
 		for _, v := range prox {
